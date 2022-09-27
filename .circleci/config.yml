@@ -2,6 +2,8 @@ version: 2.1
 
 
 jobs:
+
+# Building the application
   build-frontend:
     docker:
       - image: circleci/node:13.8.0
@@ -18,7 +20,6 @@ jobs:
       - save_cache:
           paths: [frontend/node_modules]
           key: frontend-build
-
   build-backend:
     docker:
       - image: circleci/node:13.8.0
@@ -82,7 +83,6 @@ jobs:
             
             npm audit fix --audit-level=critical --force
             npm audit --audit-level=critical
-
       - save_cache:
           paths: [frontend/node_modules]
           key: frontend-scan
@@ -104,9 +104,6 @@ jobs:
             npm fund
             npm audit fix
             npm audit --audit-level=critical
-            
-
-
       - save_cache:
           paths: [backend/node_modules]
           key: backend-scan
@@ -114,13 +111,13 @@ workflows:
   default:
     jobs:
       # - build-frontend
-      - build-backend
+      # - build-backend
       # - test-frontend:
       #     requires: [build-frontend]
       # - test-backend:
       #     requires: [build-backend]
       # - scan-frontend:
       #     requires: [build-frontend]
-      - scan-backend:
-           requires: [build-backend]
+      # - scan-backend:
+      #      requires: [build-backend]
 
