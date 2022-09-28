@@ -137,6 +137,10 @@ jobs:
               --template-file .circleci/files/frontend.yml \
               --stack-name "udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}" \
               --parameter-overrides "ID=${CIRCLE_WORKFLOW_ID:0:7}"  
+      - run:
+          name: install tar
+          command: |
+            sudo apt-get install tar
   
       - run:
           name: Fetch public IP of EC2 instance
