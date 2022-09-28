@@ -138,13 +138,15 @@ jobs:
               --stack-name "udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}" \
               --parameter-overrides "ID = ${CIRCLE_WORKFLOW_ID:0:7}"  
               exit 1
-      
+      - run:
+          name: Fetch public IP of EC2 instance
+          command: |
+            echo "ec2_instance_ip=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}" --query "Reservations[*].Instances[*].PublicIpAddress" --output text)" >> $CIRCLE_WORKSPACE/inventory.txt  
+            exit 1
       - persist_to_workspace:
           root: ~/
           paths:
             - project/.circleci/ansible/inventory.txt
-
-
 workflows:
   default:
     jobs:
