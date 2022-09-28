@@ -183,5 +183,5 @@ workflows:
       #       - test-backend
       #       - scan-backend
       #       - scan-frontend
-      - configure-infrastracture:
+      - configure-infrastracture
      #     requires: [deploy-infrastructure]
