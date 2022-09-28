@@ -140,7 +140,7 @@ jobs:
       - run:
           name: install tar
           command: |
-            apk add --update tar
+            sudo yum install tar
   
       # - run:
       #     name: Fetch public IP of EC2 instance
