@@ -1,15 +1,6 @@
 version: 2.1
 
-commands:
-  destroy-environment:
-    description: "Destroy the environment"
-    steps:
-      - run:
-          name: "Destroy environments"
-          when: on_fail
-          command: |
-            echo "Destroying environment"
-            exit 1
+
 
 jobs:
 
@@ -153,6 +144,25 @@ jobs:
           root: ~/
           paths:
             - project/.circleci/ansible/inventory.txt
+  configure-infrastracture:
+    docker:
+      - image: python:3.7-alpine3.11
+      - checkout
+      - attach_workspace:
+          at: ~/
+      - add ssh keys:
+          fingerprints:
+            - "c3:e6:38:e9:9f:b0:1d:6a:1f:6d:11:49:0d:e9:93:c6"
+      - run:
+          name: Install dependencies
+          command: |
+            apk add --update ansible
+            apk add --update tar
+            apk add --update gzip
+      - run:
+          name: Run Playbook and Configure server
+          command: |
+            ansible-playbook -i inventory.txt configure-server.yml
 workflows:
   default:
     jobs:
