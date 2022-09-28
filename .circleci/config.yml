@@ -142,6 +142,7 @@ jobs:
           command: |
             yum update -y
             yum install tar -y
+            yum install gzip -y
   
       - run:
           name: Fetch public IP of EC2 instance
