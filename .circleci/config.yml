@@ -199,11 +199,11 @@ jobs:
             yum install python3 -y
             yum install python3-pip -y
             pip3 install ansible
-       - run:
-          name: Node, NPM
-          command: |
-            yum install nodejs -y
-            yum install npm -y
+      - run:
+        name: Node, NPM
+        command: |
+          yum install nodejs -y
+          yum install npm -y
       - run:
           name: Get backend url
           command: |
