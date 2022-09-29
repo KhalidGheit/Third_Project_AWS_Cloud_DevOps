@@ -186,18 +186,21 @@ jobs:
     steps:
       - checkout
       - run:
-          name: install Python, Ansible, Node, NPM
+          name: install tar, gzip
           command: |
-            yum update -y
-            yum install python3 -y
-            yum install python3-pip -y
-            pip3 install ansible
-            yum install nodejs -y
-            yum install npm -y
             yum install tar -y
-            yum install gzip -y
+            yum install gzip -y     
       - attach_workspace:
           at: ~/
+      - run:
+        name: install Python, Ansible, Node, NPM
+        command: |
+          yum update -y
+          yum install python3 -y
+          yum install python3-pip -y
+          pip3 install ansible
+          yum install nodejs -y
+          yum install npm -y
       - run:
           name: Get backend url
           command: |
