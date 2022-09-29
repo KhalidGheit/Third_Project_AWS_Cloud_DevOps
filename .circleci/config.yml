@@ -222,31 +222,32 @@ jobs:
   deploy-backend:
     docker:
       - image: python:3.7-alpine3.11
-    - add_ssh_keys:
-              fingerprints: ["c3:e6:38:e9:9f:b0:1d:6a:1f:6d:11:49:0d:e9:93:c6"]
-    - attach_workspace:
-        at: ~/
-    - run:
-      name: install Python, Ansible, nodejs, tar, gzip
-      command: |
-        apk add --update ansible
-        apk add --update tar
-        apk add --update gzip
-        apk add --update nodejs npm
-        apk add --update npm
-    - run: 
-        name: Run Playbook and Deploy backend
+    steps:
+      - attach_workspace:
+          at: ~/
+      - add_ssh_keys:
+                fingerprints: ["c3:e6:38:e9:9f:b0:1d:6a:1f:6d:11:49:0d:e9:93:c6"] 
+      - run:
+        name: install Python, Ansible, nodejs, tar, gzip
         command: |
-          cd backend
-          npm i
-          npm run build
-          cd ..
-          # Zip the directory
-          tar -C backend -czvf artifact.tar.gz .
-          cd .circleci/ansible
-          echo "Contents  of the inventory.txt file is -------"
-          cat inventory.txt
-          ansible-playbook -i inventory.txt deploy-backend.yml
+          apk add --update ansible
+          apk add --update tar
+          apk add --update gzip
+          apk add --update nodejs npm
+          apk add --update npm
+      - run: 
+          name: Run Playbook and Deploy backend
+          command: |
+            cd backend
+            npm i
+            npm run build
+            cd ..
+            # Zip the directory
+            tar -C backend -czvf artifact.tar.gz .
+            cd .circleci/ansible
+            echo "Contents  of the inventory.txt file is -------"
+            cat inventory.txt
+            ansible-playbook -i inventory.txt deploy-backend.yml
 workflows: 
   default:
     jobs:
