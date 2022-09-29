@@ -180,7 +180,7 @@ jobs:
           command: |   
               if grep -q "has been executed successfully." ~/project/backend/migrations_dump.txt
               then
-                  curl -k https://kvdb.io/Y9jpPoK3nS5VZSsnKyBRv3/migration_${CIRCLE_WORKFLOW_ID:0:7}  -d '1'
+                curl -k https://kvdb.io/Y9jpPoK3nS5VZSsnKyBRv3/migration_${CIRCLE_WORKFLOW_ID:0:7}  -d '1'
               fi
 workflows:
   default:
