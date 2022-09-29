@@ -193,7 +193,7 @@ jobs:
       - attach_workspace:
           at: ~/
       - run:
-        name: install Python, Ansible, Node, NPM
+          name: install Python, Ansible, Node, NPM
           command: |
             yum update -y
             yum install python3 -y
