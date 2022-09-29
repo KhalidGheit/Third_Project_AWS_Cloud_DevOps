@@ -188,6 +188,8 @@ jobs:
       - run:
           name: install tar, gzip
           command: |
+            curl –sL https://rpm.nodesource.com/setup_10.x | bash -
+            yum install nodejs -y
             yum install tar -y
             yum install gzip -y     
       - attach_workspace:
@@ -199,11 +201,6 @@ jobs:
             yum install python3 -y
             yum install python3-pip -y
             pip3 install ansible
-      - run:
-          name: Node, NPM
-          command: |
-            curl –sL https://rpm.nodesource.com/setup_10.x | sudo bash -
-            yum install nodejs -y
       - run:
           name: Get backend url
           command: |
