@@ -194,13 +194,13 @@ jobs:
           at: ~/
       - run:
         name: install Python, Ansible, Node, NPM
-        command: |
-          yum update -y
-          yum install python3 -y
-          yum install python3-pip -y
-          pip3 install ansible
-          yum install nodejs -y
-          yum install npm -y
+          command: |
+            yum update -y
+            yum install python3 -y
+            yum install python3-pip -y
+            pip3 install ansible
+            yum install nodejs -y
+            yum install npm -y
       - run:
           name: Get backend url
           command: |
