@@ -300,6 +300,7 @@ jobs:
             echo ${URL} 
             if curl -s ${URL} | grep "Welcome"
             then
+              echo "Smoke test passed"
               return 1
             else
               return 1
