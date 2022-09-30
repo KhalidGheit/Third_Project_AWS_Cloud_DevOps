@@ -238,7 +238,7 @@ jobs:
       - run:
           name: Run ls
           command: |
-            ls - la
+            ls -a
       - run:
           name: Run pwd
           command: |
