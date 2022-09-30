@@ -287,10 +287,9 @@ jobs:
       - run:
           name: Run smoke test for backend
           command: |
-            export BACKEND_IP=$(aws cloudformation describe-stacks --stack-name "udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}" --query "Stacks[*].Outputs[?OutputKey=='PublicIP'])
+            export BACKEND_IP=$(aws ec2 describe-instances --filters "Name=tag:aws:cloudformation:logical-id,Values=EC2Instance" --query 'Reservations[*].Instances[*].PublicIpAddress' --output text)
             export API_URL="http://${BACKEND_IP}:3030"
             echo "${API_URL}"
-            echo ${BACKEND_IP}
             if curl "${API_URL}/api/status" | grep "ok"
             then
                 return 0
@@ -310,24 +309,7 @@ jobs:
               return 1
             fi
       - destroy_environment
-  smoke-test2:
-    docker:
-      - image: python:3.7-alpine3.11
-    steps:
-      - checkout
-      - attach_workspace:
-          at: ~/
-      #install curl, nodejs, npm
-      - run:
-          name: install curl, aws cli
-          command: |
-            pip3 install awscli
-      - run:
-          name: Run smoke test for backend
-          command: |
-            export BACKEND_IP=$(aws ec2 describe-instances --filters "Name=tag:aws:cloudformation:logical-id,Values=EC2Instance" --query 'Reservations[*].Instances[*].PublicIpAddress' --output text)
-            echo ${BACKEND_IP}
-workflows: 
+
   default:
     jobs:
       - build-frontend
