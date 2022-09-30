@@ -235,10 +235,18 @@ jobs:
             apk add --update gzip
             apk add --update nodejs npm
             apk add --update npm
+      - run:
+          name: Run ls
+          command: |
+            ls - la
+      - run:
+          name: Run pwd
+          command: |
+            pwd
       - run: 
           name: Run Playbook and Deploy backend
           command: |
-            cd ./backend
+            cd backend
             npm i
             npm run build
             cd ..
