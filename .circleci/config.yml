@@ -1,4 +1,14 @@
 version: 2.1
+commands:
+  destroy_environment:
+    steps:
+      - run:
+          name: Destroy environment
+          when: on_fail
+          command: |
+            aws cloudformation delete-stack --stack-name "udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}"
+            aws cloudformation delete-stack --stack-name "udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}"
+
 
 jobs:
 
@@ -142,6 +152,8 @@ jobs:
           root: ~/
           paths:
             - project/.circleci/ansible/inventory.txt
+      - destroy_environment
+
   configure-infrastracture:
     docker:
       - image: python:3.7-alpine3.11
@@ -162,6 +174,7 @@ jobs:
             command: |
               cd .circleci/ansible
               ansible-playbook -i inventory.txt configure-server.yml
+        - destroy_environment
   run-migrations:
     docker:
       - image: circleci/node:13.8.0
@@ -180,6 +193,7 @@ jobs:
               then
                 curl -k https://kvdb.io/Y9jpPoK3nS5VZSsnKyBRv3/migration_${CIRCLE_WORKFLOW_ID:0:7}  -d '1'
               fi
+      - destroy_environment
   deploy-frontend:
     docker:
       - image: amazon/aws-cli
@@ -218,6 +232,7 @@ jobs:
             npm run build
             tar -czvf artifact-"${CIRCLE_WORKFLOW_ID:0:7}".tar.gz dist
             aws s3 cp dist s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7} --recursive
+      - destroy_environment
 
   deploy-backend:
     docker:
@@ -249,6 +264,47 @@ jobs:
             echo "Contents  of the inventory.txt file is -------"
             cat inventory.txt
             ansible-playbook -i inventory.txt deploy-backend.yml
+      - destroy_environment
+  smoke-test:
+    docker:
+      - image: python:3.7-alpine3.11
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/
+      #install curl, nodejs, npm
+      - run:
+          name: install curl, nodejs, npm
+          command: |
+            apk add --update curl
+            apk add --update nodejs
+            apk add --update npm
+      - run:
+          name: Run smoke test for backend
+          command: |
+            export BACKEND_IP=$(aws cloudformation describe-instances --filters "Name=tag:Name,Values=udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}" --query "Reservations[*].Instances[*].PublicIpAddress" --output text)
+            export API_URL="http://${BACKEND_IP}:3030"
+            echo "API_URL = ${API_URL}"
+            if curl "${API_URL}}/api/status" | grep -q "OK"
+            then
+              echo "Smoke test passed"
+              reutrn 0
+            else
+              echo "Smoke test failed"
+              exit 1
+            fi
+      - run:
+          name: Run smoke test for frontend
+          command: |
+            URL="http://udapeople-${CIRCLE_WORKFLOW_ID:0:7}.s3-website-us-east-1.amazonaws.com/#/employees"            
+            echo ${URL} 
+            if curl -s ${URL} | grep "Welcome"
+            then
+              return 1
+            else
+              return 1
+            fi
+      - destroy_environment
 workflows: 
   default:
     jobs:
