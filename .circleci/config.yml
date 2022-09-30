@@ -6,8 +6,9 @@ commands:
           name: Destroy environment
           when: on_fail
           command: |
+            echo "Destroying environment ${CIRCLE_WORKFLOW_ID:0:7}"
             aws cloudformation delete-stack --stack-name "udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}"
-            aws s3 rb s3://udapeople-front-end-${CIRCLE_WORKFLOW_ID:0:7} --force
+            aws s3 rm s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7} --recursive
             aws cloudformation delete-stack --stack-name "udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}"
 
 
@@ -286,7 +287,7 @@ jobs:
       - run:
           name: Run smoke test for backend
           command: |
-            export BACKEND_IP=$(aws cloudformation describe-stacks --stack-name "udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}" --query "Stacks[*].Outputs[?OutputKey=='PublicIP'].OutputValue" --output text)
+            export API_URL=$(aws cloudformation describe-stacks --stack-name "udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}" --query "Stacks[*].Outputs[?OutputKey=='PublicIP'].OutputValue" --output text)
             export API_URL="http://${BACKEND_IP}:3030"
             echo "${API_URL}"
             if curl "${API_URL}/api/status" | grep "ok"
