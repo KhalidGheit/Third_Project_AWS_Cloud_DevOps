@@ -276,7 +276,6 @@ jobs:
       - checkout
       - attach_workspace:
           at: ~/
-      #install curl, nodejs, npm
       - run:
           name: install curl, nodejs, npm
           command: |
