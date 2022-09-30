@@ -236,10 +236,6 @@ jobs:
             apk add --update nodejs npm
             apk add --update npm
       - run:
-          name: Run ls
-          command: |
-            ls -a
-      - run:
           name: Run pwd
           command: |
             pwd
