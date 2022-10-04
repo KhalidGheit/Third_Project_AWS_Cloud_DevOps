@@ -1,6 +1,14 @@
-- name: "run bash script"
+# - name: "run bash script"
+#   become: yes
+#   shell: |
+#     npm install
+#     pm2 stop default
+#     pm2 start npm -- start
+# extract the zipped artifact artifact.tar.gz into the EC2 instance, andstart the app
+- name: "extract the zipped artifact artifact.tar.gz into the EC2 instance, andstart the app"
   become: yes
   shell: |
+    tar -xvf artifact.tar.gz
     npm install
     pm2 stop default
     pm2 start npm -- start
