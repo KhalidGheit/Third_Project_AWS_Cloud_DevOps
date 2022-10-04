@@ -149,7 +149,7 @@ jobs:
       - run:
           name: Fetch public IP of EC2 instance
           command: |
-            echo "ec2_instance_ip=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}" --query "Reservations[*].Instances[*].PublicIpAddress" --output text)" >> $CIRCLE_WORKSPACE/inventory.txt  
+            echo "ec2_instance_ip=$(aws ec2 describe-instances --filters "Name=tag:aws:cloudformation:logical-id,Values=EC2Instance" --query 'Reservations[*].Instances[*].PublicIpAddress' --output text)" >> .circleci/ansible/inventory.txt  
 
       - persist_to_workspace:
           root: ~/
@@ -223,7 +223,7 @@ jobs:
       - run:
           name: Get backend url
           command: |
-            export BACKEND_IP=$(aws cloudformation describe-instances --filters "Name=tag:Name,Values=udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}" --query "Reservations[*].Instances[*].PublicIpAddress" --output text)
+            export BACKEND_IP=$(aws ec2 describe-instances --filters "Name=tag:aws:cloudformation:logical-id,Values=EC2Instance" --query 'Reservations[*].Instances[*].PublicIpAddress' --output text)
             export API_URL="http://${BACKEND_IP}:3030"
             echo "API_URL = ${API_URL}"
             echo API_URL="http://${BACKEND_IP}:3030" >> frontend/.env
