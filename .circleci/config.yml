@@ -147,7 +147,7 @@ jobs:
       - destroy_environment
   
       - run:
-          name: Fetch public IP of EC2 instance
+          name: Fetch public IP of EC2
           command: |
             cd .circleci/ansible
             echo " " >> inventory.txt
