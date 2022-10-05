@@ -149,8 +149,9 @@ jobs:
       - run:
           name: Fetch public IP of EC2 instance
           command: |
-            echo "ec2_instance_ip=$(aws ec2 describe-instances --filters "Name=tag:aws:cloudformation:logical-id,Values=EC2Instance" --query 'Reservations[*].Instances[*].PublicIpAddress' --output text)" >> .circleci/ansible/inventory.txt  
-
+            cd .circleci/ansible
+            echo "ec2_instance_ip=$(aws ec2 describe-instances --filters "Name=tag:aws:cloudformation:logical-id,Values=EC2Instance" --query 'Reservations[*].Instances[*].PublicIpAddress' --output text)" >> inventory.txt  
+            cat inventory.txt
       - persist_to_workspace:
           root: ~/
           paths:
@@ -311,30 +312,30 @@ jobs:
 workflows:
   default:
     jobs:
-      - build-frontend
-      - build-backend
-      - test-frontend:
-          requires: [build-frontend]
-      - test-backend:
-          requires: [build-backend]
-      - scan-frontend:
-          requires: [build-frontend]
-      - scan-backend:
-          requires: [build-backend]
-      - deploy-infrastructure:
-          requires:
-            - test-frontend
-            - test-backend
-            - scan-backend
-            - scan-frontend
-      - configure-infrastracture:
-          requires: [deploy-infrastructure]
-      - run-migrations:
-          requires: [configure-infrastracture]
-      - deploy-frontend:
-          requires: [run-migrations]
-      - deploy-backend:
-          requires: [deploy-frontend]
-      - smoke-test:
-          requires: [deploy-backend]
+      # - build-frontend
+      # - build-backend
+      # - test-frontend:
+      #     requires: [build-frontend]
+      # - test-backend:
+      #     requires: [build-backend]
+      # - scan-frontend:
+      #     requires: [build-frontend]
+      # - scan-backend:
+      #     requires: [build-backend]
+      - deploy-infrastructure
+          # requires:
+          #   - test-frontend
+          #   - test-backend
+          #   - scan-backend
+          #   - scan-frontend
+      # - configure-infrastracture:
+      #     requires: [deploy-infrastructure]
+      # - run-migrations:
+      #     requires: [configure-infrastracture]
+      # - deploy-frontend:
+      #     requires: [run-migrations]
+      # - deploy-backend:
+      #     requires: [deploy-frontend]
+      # - smoke-test:
+      #     requires: [deploy-backend]
           
