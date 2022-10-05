@@ -150,7 +150,7 @@ jobs:
           name: Fetch public IP of EC2 instance
           command: |
             cd .circleci/ansible
-            echo "" >> test.txt
+            echo " " >> inventory.txt
             echo "$(aws ec2 describe-instances --filters "Name=tag:aws:cloudformation:logical-id,Values=EC2Instance" --query 'Reservations[*].Instances[*].PublicIpAddress' --output text)" >> inventory.txt  
             cat inventory.txt
       - persist_to_workspace:
@@ -245,8 +245,8 @@ jobs:
       - image: python:3.7-alpine3.11
     steps:
       - checkout
-      # - attach_workspace:
-      #     at: ~/
+      - attach_workspace:
+          at: ~/
       - add_ssh_keys:
                 fingerprints: ["c3:e6:38:e9:9f:b0:1d:6a:1f:6d:11:49:0d:e9:93:c6"] 
       - run:
@@ -309,34 +309,34 @@ jobs:
             else
               return 1
             fi
-      #- destroy_environment
+      - destroy_environment
 workflows:
   default:
     jobs:
-      # - build-frontend
-      # - build-backend
-      # - test-frontend:
-      #     requires: [build-frontend]
-      # - test-backend:
-      #     requires: [build-backend]
-      # - scan-frontend:
-      #     requires: [build-frontend]
-      # - scan-backend:
-      #     requires: [build-backend]
-      # - deploy-infrastructure
-          # requires:
-          #   - test-frontend
-          #   - test-backend
-          #   - scan-backend
-          #   - scan-frontend
-      # - configure-infrastracture:
-      #     requires: [deploy-infrastructure]
-      # - run-migrations:
-      #     requires: [configure-infrastracture]
-      # - deploy-frontend:
-      #     requires: [run-migrations]
-      - deploy-backend
-          # requires: [deploy-frontend]
+      - build-frontend
+      - build-backend
+      - test-frontend:
+          requires: [build-frontend]
+      - test-backend:
+          requires: [build-backend]
+      - scan-frontend:
+          requires: [build-frontend]
+      - scan-backend:
+          requires: [build-backend]
+      - deploy-infrastructure:
+          requires:
+            - test-frontend
+            - test-backend
+            - scan-backend
+            - scan-frontend
+      - configure-infrastracture:
+          requires: [deploy-infrastructure]
+      - run-migrations:
+          requires: [configure-infrastracture]
+      - deploy-frontend:
+          requires: [run-migrations]
+      - deploy-backend:
+          requires: [deploy-frontend]
       - smoke-test:
           requires: [deploy-backend]
           
