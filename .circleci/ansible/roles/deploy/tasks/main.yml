@@ -1,4 +1,4 @@
-- name: "unarchive"
+- name: "unarchive artifact.tar.gz"
   unarchive:
     src: artifact.tar.gz
     dest: /home/ubuntu
