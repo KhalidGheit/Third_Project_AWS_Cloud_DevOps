@@ -245,8 +245,8 @@ jobs:
       - image: python:3.7-alpine3.11
     steps:
       - checkout
-      - attach_workspace:
-          at: ~/
+      # - attach_workspace:
+      #     at: ~/
       - add_ssh_keys:
                 fingerprints: ["c3:e6:38:e9:9f:b0:1d:6a:1f:6d:11:49:0d:e9:93:c6"] 
       - run:
@@ -323,20 +323,20 @@ workflows:
       #     requires: [build-frontend]
       # - scan-backend:
       #     requires: [build-backend]
-      - deploy-infrastructure
+      # - deploy-infrastructure
           # requires:
           #   - test-frontend
           #   - test-backend
           #   - scan-backend
           #   - scan-frontend
-      - configure-infrastracture:
-          requires: [deploy-infrastructure]
-      - run-migrations:
-          requires: [configure-infrastracture]
-      - deploy-frontend:
-          requires: [run-migrations]
-      - deploy-backend:
-          requires: [deploy-frontend]
+      # - configure-infrastracture:
+      #     requires: [deploy-infrastructure]
+      # - run-migrations:
+      #     requires: [configure-infrastracture]
+      # - deploy-frontend:
+      #     requires: [run-migrations]
+      - deploy-backend
+          # requires: [deploy-frontend]
       - smoke-test:
           requires: [deploy-backend]
           
