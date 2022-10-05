@@ -2,7 +2,7 @@
 - name: "extract the zipped artifact artifact.tar.gz into the EC2 instance"
   become: yes
   shell: |
-    tar -xzvf artifact.tar.gz
+    tar -xzvf artifact.tar.gz .
     cd artifact
     npm install
     pm2 stop default
