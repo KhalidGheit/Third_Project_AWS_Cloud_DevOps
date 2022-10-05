@@ -3,7 +3,6 @@
     src: artifact.tar.gz
     dest: /home/ubuntu
 
-
 - name: install and start app
   command: |
     npm install
