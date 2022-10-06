@@ -19,7 +19,6 @@ commands:
           command: |
             echo "Reverting migrations"
             SUCCESS= 1
-#           $(curl --insecure https://kvdb.io/Y9jpPoK3nS5VZSsnKyBRv3/migratio)
             if (( $SUCCESS == 1 ));
             then
                 cd ~/project/backend
