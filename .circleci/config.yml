@@ -46,7 +46,7 @@ commands:
           name: test only
           when: on_fail
           command: |
-            if [$(curl --insecure  https://kvdb.io/Y9jpPoK3nS5VZSsnKyBRv3/migration_05e16db == 1];
+            if [$(curl --insecure  https://kvdb.io/Y9jpPoK3nS5VZSsnKyBRv3/migration_05e16db) == 1];
             then
               echo "curl worked"
             fi
@@ -309,7 +309,7 @@ jobs:
             cd ..
             touch artifact.tar.gz
             tar --ignore-failed-read --exclude=artifact.tar.gz -czvf artifact.tar.gz .
-            cp artifact.tar.gz .circleci/ansible/roles/deploy/files
+            cp artifact.tar.gz ./.circleci/ansible/roles/deploy/files/
             cd .circleci/ansible
             echo "Contents  of the inventory.txt file is -------"
             cat inventory.txt
