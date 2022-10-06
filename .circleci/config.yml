@@ -18,7 +18,8 @@ commands:
           when: on_fail
           command: |
             echo "Reverting migrations"
-            SUCCESS=$(curl --insecure https://kvdb.io/Y9jpPoK3nS5VZSsnKyBRv3/migratio)
+            SUCCESS= 1
+#           $(curl --insecure https://kvdb.io/Y9jpPoK3nS5VZSsnKyBRv3/migratio)
             if (( $SUCCESS == 1 ));
             then
                 cd ~/project/backend
@@ -287,7 +288,7 @@ jobs:
             cd .circleci/ansible
             echo "Contents  of the inventory.txt file is -------"
             cat inventory.txt
-            ansible-playbook -i inventory.txt deploy-backend.yml
+#            ansible-playbook -i inventory.txt deploy-backend.yml
       - destroy_environment
       - revert-migrations
 
@@ -305,6 +306,7 @@ jobs:
             apk add --update nodejs
             apk add --update npm
             pip3 install awscli
+
       - run:
           name: Run smoke test for backend
           command: |
@@ -412,4 +414,8 @@ workflows:
           requires: [deploy-frontend]
       - smoke-test:
           requires: [deploy-backend]
+      - cloufront-update:
+          requires: [smoke-test]
+      - cleanup: 
+          requires: [cloufront-update]
   
