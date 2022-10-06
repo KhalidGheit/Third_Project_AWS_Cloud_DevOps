@@ -289,9 +289,7 @@ jobs:
             cat inventory.txt
             ansible-playbook -i inventory.txt deploy-backend.yml
       - destroy_environment
-      - revert-migrations:
-          parameters:
-            workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}
+      - revert-migrations
 
   smoke-test:
     docker:
@@ -332,9 +330,7 @@ jobs:
               return 1
             fi
       - destroy_environment
-      - revert-migrations:
-          parameters:
-            workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}
+      - revert-migrations
   cloufront-update:
     docker:
       - image: amazon/aws-cli
