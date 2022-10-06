@@ -17,18 +17,18 @@ commands:
             type: string      
             # _<< parameters.workflow_id >>
     steps:
-        - run:
-            name: Revert migrations
-            when: on_fail
-            command: |
-                echo "Reverting migrations"
-                SUCCESS=$(curl --insecure https://kvdb.io/Y9jpPoK3nS5VZSsnKyBRv3/migratio)
-                if (( $SUCCESS == 1 ));
-                then
-                    cd ~/project/backend
-                    npm install
-                    npm run migration:revert
-                fi  
+      - run:
+          name: Revert migrations
+          when: on_fail
+          command: |
+              echo "Reverting migrations"
+              SUCCESS=$(curl --insecure https://kvdb.io/Y9jpPoK3nS5VZSsnKyBRv3/migratio)
+              if (( $SUCCESS == 1 ));
+              then
+                  cd ~/project/backend
+                  npm install
+                  npm run migration:revert
+              fi  
 
 jobs:
 
