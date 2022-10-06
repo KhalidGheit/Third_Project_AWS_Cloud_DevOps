@@ -265,7 +265,7 @@ jobs:
             npm install
             npm run build
             cd ..
-            tar --exclude=artifact.tar.gz -czvf artifact.tar.gz .
+            tar --ignore-failed-read --exclude=artifact.tar.gz -czvf artifact.tar.gz .
             cp artifact.tar.gz .circleci/ansible/roles/deploy/files
             cd .circleci/ansible
             echo "Contents  of the inventory.txt file is -------"
