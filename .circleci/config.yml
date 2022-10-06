@@ -19,7 +19,7 @@ commands:
           command: |
             cd ~/project/backend
             npm install
-            npm run migration:revert
+            npm run migrations:revert
 #            fi
 #            SUCCESS=$(curl --insecure https://kvdb.io/Y9jpPoK3nS5VZSsnKyBRv3/migratio)
 #            if (( $SUCCESS == 1 ));
