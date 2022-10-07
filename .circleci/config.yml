@@ -39,17 +39,13 @@ commands:
           when: on_fail
           command: |
             echo "Reverting migrations"
-            cd ~/project/backend
-            npm install
-            npm run migrations:revert
-      - run:
-          name: test only
-          when: on_fail
-          command: |
             apk add --update curl
-            if [[ $(curl --insecure  https://kvdb.io/Y9jpPoK3nS5VZSsnKyBRv3/migration_05e16db) == "1" ]];
+            if [[ curl --insecure  https://kvdb.io/9GE4jRtKznmVKRfvdBABBe/migration_<< parameters.workflow_id >>) == "1" ]];
             then
-              echo "curl worked"
+              echo "Reverting migrations"
+              cd ~/project/backend
+              npm install
+              npm run migrations:revert
             fi
                       
 jobs:
@@ -310,7 +306,7 @@ jobs:
             cd ..
             touch artifact.tar.gz
             tar --ignore-failed-read --exclude=artifact.tar.gz -czvf artifact.tar.gz .
-            cp -f artifact.tar.gz .circleci/ansible/roles/deploy/files
+            mv -f artifact.tar.gz .circleci/ansible/roles/deploy/files
       - run:
           name: check
           command: |
