@@ -3,7 +3,9 @@
   unarchive:
     src: artifact.tar.gz
     dest: /home/ubuntu
-
+- name: fix Bug
+  command: |
+    sudo chown -R 1000:1000 "/home/ubuntu/.npm"
 - name: install and start app
   command: |
     npm install
