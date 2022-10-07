@@ -301,7 +301,7 @@ jobs:
             apk add --update npm
             pip3 install awscli
       - run: 
-          name: Run Ansible and Deploy backend
+          name: Deploy backend
           command: |
             cd backend
             npm install
@@ -310,6 +310,10 @@ jobs:
             touch artifact.tar.gz
             tar --ignore-failed-read --exclude=artifact.tar.gz -czvf artifact.tar.gz .
             cp -f artifact.tar.gz .circleci/ansible/roles/deploy/files
+            ls .circleci/ansible/roles/deploy/files
+      - run:
+          name: Run Playbook 
+          command: |
             cd .circleci/ansible
             echo "Contents  of the inventory.txt file is -------"
             cat inventory.txt
