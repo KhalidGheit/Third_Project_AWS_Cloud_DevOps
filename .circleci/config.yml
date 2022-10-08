@@ -282,7 +282,7 @@ jobs:
             npm install
             npm run build
             cd ..
-            tar --ignore-failed-read --exclude=artifact.tar.gz -czvf .circleci/ansible/roles/deploy/files/artifact.tar.gz .
+            tar --ignore-failed-read --exclude=artifact.tar.gz -czvf .circleci/ansible/roles/deploy/files/artifact.tar.gz ./backend
       - run:
           name: check
           command: |
