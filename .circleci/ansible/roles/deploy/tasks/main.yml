@@ -10,12 +10,6 @@
     owner: ubuntu
     group: ubuntu
     recurse: yes
-- name: chown2
-  become: yes
-  command: |
-    chown -R 1000:1000 /home/ubuntu
-    chown -R 1000:1000 /home/ubuntu/backend
-
 
 - name: install and start app
   command: |
