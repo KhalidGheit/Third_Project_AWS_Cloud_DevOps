@@ -1,4 +1,4 @@
-- name: "unarchive artifact.tar.gz"
+- name: "unarchive artifact.tar.gz "
   become: yes
   unarchive:
     src: artifact.tar.gz
