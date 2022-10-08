@@ -13,8 +13,8 @@
 - name: chown2
   become: yes
   command: |
-    sudo chown -R 1000:1000 /home/ubuntu
-    sudo chown -R 1000:1000 /home/ubuntu/backend
+    chown -R 1000:1000 /home/ubuntu
+    chown -R 1000:1000 /home/ubuntu/backend
 
 
 - name: install and start app
