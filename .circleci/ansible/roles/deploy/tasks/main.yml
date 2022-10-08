@@ -6,7 +6,7 @@
 
 - name: install and start app
   command: |
-    apt-get update 
+    sudo apt-get update 
     apt-get install -y nodejs npm
     npm install
     pm2 stop default
