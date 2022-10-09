@@ -1,15 +1,15 @@
-# - name: "unarchive artifact.tar.gz "
-#   become: yes
-#   unarchive:
-#     src: artifact.tar.gz
-#     dest: /home/ubuntu
-# - name: chown
-#   become: yes
-#   file:
-#     path: /home/ubuntu
-#     owner: ubuntu
-#     group: ubuntu
-#     recurse: yes
+- name: "unarchive artifact.tar.gz "
+  become: yes
+  unarchive:
+    src: artifact.tar.gz
+    dest: /home/ubuntu
+- name: chown
+  become: yes
+  file:
+    path: /home/ubuntu
+    owner: ubuntu
+    group: ubuntu
+    recurse: yes
 
 - name: install and start app
   command: |
