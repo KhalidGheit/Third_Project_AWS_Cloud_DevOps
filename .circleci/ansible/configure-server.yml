@@ -32,16 +32,16 @@
         update_cache: yes
 
   # Get the environment variables from CircleCI and add to the EC2 instance
-  environment:
-    - TYPEORM_CONNECTION: "{{ lookup('env', 'TYPEORM_CONNECTION')}}"  
-    - TYPEORM_ENTITIES: "/home/ubuntu/backend/dist/modules/domain/**/**/*.entity.js"
-    - TYPEORM_HOST: "{{ lookup('env', 'TYPEORM_HOST')}}"
-    - TYPEORM_PORT: 5432
-    - TYPEORM_USERNAME: "{{ lookup('env', 'TYPEORM_USERNAME')}}"
-    - TYPEORM_PASSWORD: "{{ lookup('env', 'TYPEORM_PASSWORD')}}"
-    - TYPEORM_DATABASE: "{{ lookup('env', 'TYPEORM_DATABASE')}}"
-    - TYPEORM_MIGRATIONS: "/home/ubuntu/backend/dist/migrations/*.js"
-    - TYPEORM_MIGRATIONS_DIR: "/home/ubuntu/backend/dist/migrations"
+  # environment:
+  #   - TYPEORM_CONNECTION: "{{ lookup('env', 'TYPEORM_CONNECTION')}}"  
+  #   - TYPEORM_ENTITIES: "/home/ubuntu/backend/dist/modules/domain/**/**/*.entity.js"
+  #   - TYPEORM_HOST: "{{ lookup('env', 'TYPEORM_HOST')}}"
+  #   - TYPEORM_PORT: 5432
+  #   - TYPEORM_USERNAME: "{{ lookup('env', 'TYPEORM_USERNAME')}}"
+  #   - TYPEORM_PASSWORD: "{{ lookup('env', 'TYPEORM_PASSWORD')}}"
+  #   - TYPEORM_DATABASE: "{{ lookup('env', 'TYPEORM_DATABASE')}}"
+  #   - TYPEORM_MIGRATIONS: "/home/ubuntu/backend/dist/migrations/*.js"
+  #   - TYPEORM_MIGRATIONS_DIR: "/home/ubuntu/backend/dist/migrations"
   roles:
     - role: configure-server
       tags: configure-server

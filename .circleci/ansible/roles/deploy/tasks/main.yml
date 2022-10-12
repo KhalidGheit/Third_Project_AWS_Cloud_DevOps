@@ -12,20 +12,31 @@
     recurse: yes
 
 - name: install and start application
-  command: |
+  become: yes
+  shell: |
+    export ENVIRONMENT=production
+    export TYPEORM_ENTITIES="./modules/domain/**/*.entity.js"
+    export TYPEORM_MIGRATIONS="./migrations/*.js"
+    export TYPEORM_MIGRATIONS_DIR="./migrations"
+    export TYPEORM_CONNECTION="postgres"
+    export TYPEORM_HOST="udapeople-db.cyxovfwoscrk.us-east-1.rds.amazonaws.com"
+    export TYPEORM_USERNAME="udapeople"
+    export TYPEORM_PASSWORD="udapeople123"
+    export TYPEORM_DATABASE="postgres"
+    export TYPEORM_PORT=5432
     npm install
-    pm2 stop default
-    pm2 start npm -- start
+    sudo pm2 stop default
+    sudo pm2 start main.js
   args:
     chdir: /home/ubuntu/backend/dist
-  environment:
-    ENVIRONMENT: production
-    TYPEORM_CONNECTION: "{{ lookup('env', 'TYPEORM_CONNECTION') }}"
-    TYPEORM_MIGRATIONS_DIR: "./migrations"
-    TYPEORM_MIGRATIONS: "./migrations/*.js"
-    TYPEORM_ENTITIES: "./modules/domain/**/**/*.entity.js"
-    TYPEORM_HOST: "{{ lookup('env', 'TYPEORM_HOST') }}"
-    TYPEORM_PORT: "{{ lookup('env', 'TYPEORM_PORT') }}"
-    TYPEORM_USERNAME: "{{ lookup('env', 'TYPEORM_USERNAME') }}"
-    TYPEORM_PASSWORD: "{{ lookup('env', 'TYPEORM_PASSWORD') }}"
-    TYPEORM_DATABASE: "{{ lookup('env', 'TYPEORM_DATABASE') }}"
+  # environment:
+  #   ENVIRONMENT: production
+  #   TYPEORM_CONNECTION: "{{ lookup('env', 'TYPEORM_CONNECTION') }}"
+  #   TYPEORM_MIGRATIONS_DIR: "./migrations"
+  #   TYPEORM_MIGRATIONS: "./migrations/*.js"
+  #   TYPEORM_ENTITIES: "./modules/domain/**/*.entity.js"
+  #   TYPEORM_HOST: "{{ lookup('env', 'TYPEORM_HOST') }}"
+  #   TYPEORM_PORT: "{{ lookup('env', 'TYPEORM_PORT') }}"
+  #   TYPEORM_USERNAME: "{{ lookup('env', 'TYPEORM_USERNAME') }}"
+  #   TYPEORM_PASSWORD: "{{ lookup('env', 'TYPEORM_PASSWORD') }}"
+  #   TYPEORM_DATABASE: "{{ lookup('env', 'TYPEORM_DATABASE') }}"
