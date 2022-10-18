@@ -25,6 +25,6 @@
   become: yes
   npm:
     name: pm2
-    # global: yes
-    # production: yes
+    global: yes
+    production: yes
     state: latest
