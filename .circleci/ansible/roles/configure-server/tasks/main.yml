@@ -22,9 +22,4 @@
     update_cache: yes
 
 - name: "install pm2"
-  become: yes
-  npm:
-    name: pm2
-    global: yes
-    production: yes
-    state: latest
+  command: npm install -g pm2@3.2.2

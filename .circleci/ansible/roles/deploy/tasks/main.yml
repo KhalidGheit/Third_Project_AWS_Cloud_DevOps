@@ -25,8 +25,8 @@
     export TYPEORM_DATABASE="postgres"
     export TYPEORM_PORT=5432
     npm install
-    sudo pm2 stop default
-    sudo pm2 start main.js
+    pm2 stop default
+    pm2 start main.js
   args:
     chdir: /home/ubuntu/backend/dist
   # environment:
