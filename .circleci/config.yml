@@ -369,7 +369,6 @@ jobs:
             --template-file .circleci/files/cloudfront.yml \
             --stack-name InitialStack \
             --parameter-overrides WorkflowID="udapeople-71cbbf5" \
-            --tags project=udapeople
   cleanup:
     docker:
       - image: amazon/aws-cli
