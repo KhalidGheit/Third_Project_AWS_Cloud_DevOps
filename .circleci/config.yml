@@ -359,7 +359,7 @@ jobs:
           command: |
             aws cloudformation deploy \
             --template-file .circleci/files/cloudfront.yml \
-            --stack-name FinalStack \
+            --stack-name InitialStack \
             --parameter-overrides WorkflowID="udapeople-173bd41"
   cleanup:
     docker:
