@@ -344,8 +344,6 @@ jobs:
       - image: amazon/aws-cli
     steps:
       - checkout
-      - attach_workspace: 
-          at: ~/
       - run:
           name: install dependencies
           command: |
@@ -354,13 +352,23 @@ jobs:
             yum install nodejs -y
             yum install tar -y
             yum install gzip -y
+      - attach_workspace: 
+          at: ~/
+      # - run:
+      #     name: install dependencies
+      #     command: |
+      #       yum update -y
+      #       curl –sL https://rpm.nodesource.com/setup_10.x | bash -
+      #       yum install nodejs -y
+      #       yum install tar -y
+      #       yum install gzip -y
       - run:
           name: change origin to  new s3 bucket
           command: |
             aws cloudformation deploy \
             --template-file .circleci/files/cloudfront.yml \
             --stack-name InitialStack \
-            --parameter-overrides WorkflowID="udapeople-${CIRCLE_WORKFLOW_ID:0:7}" \
+            --parameter-overrides WorkflowID="udapeople-71cbbf5" \
             --tags project=udapeople
   cleanup:
     docker:
@@ -394,34 +402,34 @@ jobs:
 workflows:
   default:
     jobs:
-      - build-frontend
-      - build-backend
-      - test-frontend:
-          requires: [build-frontend]
-      - test-backend:
-          requires: [build-backend]
-      - scan-frontend:
-          requires: [build-frontend]
-      - scan-backend:
-          requires: [build-backend]
-      - deploy-infrastructure:
-          requires:
-            - test-frontend
-            - test-backend
-            - scan-backend
-            - scan-frontend
-      - configure-infrastracture:
-          requires: [deploy-infrastructure]
-      - run-migrations:
-          requires: [configure-infrastracture]
-      - deploy-frontend:
-          requires: [run-migrations]
-      - deploy-backend:
-          requires: [deploy-frontend]
-      - smoke-test:
-          requires: [deploy-backend]
-      - cloufront-update:
-          requires: [smoke-test]
-      - cleanup: 
-          requires: [cloufront-update]
+      # - build-frontend
+      # - build-backend
+      # - test-frontend:
+      #     requires: [build-frontend]
+      # - test-backend:
+      #     requires: [build-backend]
+      # - scan-frontend:
+      #     requires: [build-frontend]
+      # - scan-backend:
+      #     requires: [build-backend]
+      # - deploy-infrastructure:
+      #     requires:
+      #       - test-frontend
+      #       - test-backend
+      #       - scan-backend
+      #       - scan-frontend
+      # - configure-infrastracture:
+      #     requires: [deploy-infrastructure]
+      # - run-migrations:
+      #     requires: [configure-infrastracture]
+      # - deploy-frontend:
+      #     requires: [run-migrations]
+      # - deploy-backend:
+      #     requires: [deploy-frontend]
+      # - smoke-test:
+      #     requires: [deploy-backend]
+      - cloufront-update
+          # requires: [smoke-test]
+      # - cleanup: 
+      #     requires: [cloufront-update]
   
