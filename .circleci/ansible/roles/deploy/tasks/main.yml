@@ -11,7 +11,7 @@
     group: ubuntu
     recurse: yes
 
-- name: start applications
+- name: start application
   become: yes
   shell: |
     export ENVIRONMENT=production
