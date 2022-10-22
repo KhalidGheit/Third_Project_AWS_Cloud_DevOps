@@ -14,7 +14,7 @@
 - name: start applications
   become: yes
   shell: |
-    export ENVIRONMENT=production
+    export ENVIRONMENT=develpment
     export TYPEORM_ENTITIES="./modules/domain/**/*.entity.js"
     export TYPEORM_MIGRATIONS="./migrations/*.js"
     export TYPEORM_MIGRATIONS_DIR="./migrations"
