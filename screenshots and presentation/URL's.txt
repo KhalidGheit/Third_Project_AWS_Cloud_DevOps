@@ -1,0 +1,8 @@
+public git repository: https://github.com/KhalidGheit/Third_Project_AWS_Cloud_DevOps
+s3 bucket: http://udapeople-3776041.s3-website-us-east-1.amazonaws.com
+cloudfront: d1l3gxcky2zz3g.cloudfront.net
+the last CircleCi workflow as Evidence in your code that:
+	Compile errors have been fixed.
+	Unit tests have been fixed.
+	All critical security vulnerabilities caught by the “Analyze” job have been fixed :
+		https://app.circleci.com/pipelines/github/KhalidGheit/Third_Project_AWS_Cloud_DevOps/262/workflows/3776041c-f0c6-45d1-a735-8641aeefd2a1
