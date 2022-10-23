@@ -379,7 +379,7 @@ jobs:
       - attach_workspace: 
           at: ~/
       - run:
-          name: Fetch the old workflow ID
+          name: Fetch old workflow ID
           command: |
             export OldWorkflowID=$(aws cloudformation \
             list-exports --query "Exports[?Name==\`WorkflowID\`].Value" \
