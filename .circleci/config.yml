@@ -389,9 +389,6 @@ jobs:
             export STACKS=($(aws cloudformation list-stacks --query "StackSummaries[*].StackName" \
             --stack-status-filter CREATE_COMPLETE --no-paginate --output text)) 
             echo Stack names: "${STACKS[@]}"
-      - run:
-          name: Delete the old stack
-          command: |
             if [[ "${STACKS[@]}" =~ "${OldWorkflowID}" ]]; then
               echo "Stack exists"
               aws s3 rm s3://udapeople-${OldWorkflowID} --recursive
