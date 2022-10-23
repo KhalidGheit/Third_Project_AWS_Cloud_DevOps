@@ -429,6 +429,6 @@ workflows:
           requires: [deploy-backend]
       - cloufront-update:
           requires: [smoke-test]
-      - cleanup:
-           requires: [cloufront-update] 
+      # - cleanup:
+      #      requires: [cloufront-update] 
   
