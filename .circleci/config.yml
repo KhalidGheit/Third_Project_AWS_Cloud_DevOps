@@ -411,27 +411,27 @@ workflows:
           requires: [build-frontend]
       - scan-backend:
           requires: [build-backend]
-      - deploy-infrastructure:
-          requires:
-            - test-frontend
-            - test-backend
-            - scan-backend
-            - scan-frontend
-      - configure-infrastracture:
-          requires: [deploy-infrastructure]
-          filters:
-            branches:
-              only: master
-      - run-migrations:
-          requires: [configure-infrastracture]
-      - deploy-frontend:
-          requires: [run-migrations]
-      - deploy-backend:
-          requires: [deploy-frontend]
-      - smoke-test:
-          requires: [deploy-backend]
-      - cloufront-update:
-          requires: [smoke-test]
+      # - deploy-infrastructure:
+      #     requires:
+      #       - test-frontend
+      #       - test-backend
+      #       - scan-backend
+      #       - scan-frontend
+      # - configure-infrastracture:
+      #     requires: [deploy-infrastructure]
+      #     filters:
+      #       branches:
+      #         only: master
+      # - run-migrations:
+      #     requires: [configure-infrastracture]
+      # - deploy-frontend:
+      #     requires: [run-migrations]
+      # - deploy-backend:
+      #     requires: [deploy-frontend]
+      # - smoke-test:
+      #     requires: [deploy-backend]
+      # - cloufront-update:
+      #     requires: [smoke-test]
       # - cleanup
       #      requires: [cloufront-update] 
   
